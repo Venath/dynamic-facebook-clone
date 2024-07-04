@@ -1,6 +1,7 @@
 import React,{useEffect, useState} from "react";
 import axios from 'axios';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import linkify from './Linkify'; // Import the linkify function
 
 import "./Post.css";
 
@@ -51,7 +52,7 @@ setMenuVisible(!menuVisible)
         <div className="postCenter">
             <div className="postCaption">
                
-                {post.title}
+            {linkify(post.title)}
             </div>
             <img src="/images/1.jpg" alt="" className="postedImage" />
         </div>
