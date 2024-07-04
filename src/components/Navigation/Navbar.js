@@ -21,7 +21,7 @@ export default function Navbar() {
       </div>
       <div className="navBarRight">
         <div className="navBarLinks">
-            <span className="navBarLink">Home Page</span>
+            <span className="navBarLink">Home Page  </span>
             <span className="navBarLink">Profile</span>
         </div>
         <div className="navBarIcons">

@@ -28,6 +28,7 @@ color: white;
 }
 .navBarIcon{
     margin-left: 10px;
+    position: relative;
 }
 .iconTag{
     width: 15px;
@@ -36,6 +37,13 @@ color: white;
     color: white;
     position: absolute;
     border-radius: 50%;
+    top: -5px;
+    right: -5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+   
 }
 .navBarLinks{
     margin-left: 10px;
