@@ -1,38 +1,57 @@
 import React,{useEffect, useState} from "react";
 import axios from 'axios';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 import "./Post.css";
 
-export default function Post() {
+export default function Post({post, removePost}) {
 
-  const [posts, setPosts] = useState([]); // Correctly initialize the useState hook
-  useEffect(() => {
-   
-    axios.get('http://localhost:8000/post/get')
-      .then((res) => {
-        if (res.data.success) {
-          console.log('Fetched data:', res.data);
-          setPosts(res.data.existingPost);
-        }
-      })
-      .catch((error) => {
-        console.error('Error fetching posts:', error);
-      });
-  }, []);
+  const deletePosts =async(id)=>{
+    try {
+      const res= await axios.delete(`http://localhost:8000/post/delete/${id}`)
+      if (res.data.success) {
+        removePost(id);
+      }
+    } catch (error) {
+      
+    }
+  }
+  const onDelete =(id)=>{
+    console.log("Deleted")
+    deletePosts(id);
+  }
+
+  const [menuVisible,setMenuVisible]=useState(false);
+
+const toggleMenu =(()=>{
+setMenuVisible(!menuVisible)
+})
   return (
     <div className="post">
       <div className="postContainer">
         <div className="postTop">
-          <img src="/images/1.jpg" alt="" className="postImage" />
-          <span className="postUserName">Venath Randima</span>
-          <span className="postTime">10 mins ago</span>
+          <div className="postTopLeft">
+            <img src="/images/1.jpg" alt="" className="postImage" />
+            <span className="postUserName">Venath Randima</span>
+            <span className="postTime">10 mins ago</span>
+          </div>
+
+         <div className="postTopRight">
+         <MoreVertIcon className="dots" onClick={toggleMenu}/>
+         {menuVisible && (
+          <div className="dropdownMenu">
+            <div className="dropdownItem"> Edit </div>
+            <div className="dropdownItem" onClick={() => onDelete(post._id)}> Delete </div>
+          </div>
+         )}
+         </div>
+        
+          
         </div>
         <div className="postCenter">
             <div className="postCaption">
-                Hello I am Venath
-                {posts.map((p) => (
-              <div key={p._id}>{p.title}</div>
-            ))}
+               
+                {post.title}
             </div>
             <img src="/images/1.jpg" alt="" className="postedImage" />
         </div>

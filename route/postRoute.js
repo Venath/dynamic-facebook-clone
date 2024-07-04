@@ -28,5 +28,24 @@ router.get('/post/get',async(req, res)=>{
     }
 });
 
+router.delete('/post/delete/:id', (req,res)=>{
+  const postId = req.params.id;
+  console.log("Deleted the post with id ", postId);
+
+  Post.findByIdAndDelete(postId)
+  .then(deletedPost=>{
+    console.log("Deleted post", deletedPost);
+    return res.status(200).json({
+      success: 'deleted',
+      deletedPost
+    });
+  }).catch(err=>{
+    console.error('Delete error:', err);
+    return res.status(400).json({
+        error: err
+    });
+  })
+})
+
 
 module.exports = router; 

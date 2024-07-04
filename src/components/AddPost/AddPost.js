@@ -6,9 +6,10 @@ import AddLocationAltIcon from '@mui/icons-material/AddLocationAlt';
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import LiveTvIcon from '@mui/icons-material/LiveTv';
 
-export default function AddPost() {
+export default function AddPost({onPostAdded}) { //Props for Callbacks: You pass callback functions from parent to child so that the child can notify the parent about events or changes, enabling the parent to take action based on those notifications.
 
   const[post, setPost]=useState('');
+
   const postButton = async () => {
     try {
       const postContent = document.getElementById('post').value;
@@ -16,6 +17,11 @@ export default function AddPost() {
   
       if (response.data && response.data.success) {
         console.log(response.data);
+        if (onPostAdded) {
+          onPostAdded(); // Notify parent component of the new post
+        }
+        setPost(''); // Clear the input field
+        
       } else {
         console.error('Error:', response.data ? response.data.message : 'No response data');
       }
@@ -24,25 +30,15 @@ export default function AddPost() {
     }
   };
 
-  // useEffect(() => {
-  //   console.log('Attempting to fetch posts from http://localhost:8000/post/get');
-  //   axios.get('http://localhost:8000/post/get')
-  //     .then((res) => {
-  //       if (res.data.success) {
-  //         console.log('Fetched data:', res.data);
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.error('Error fetching posts:', error);
-  //     });
-  // }, []);
-  
   return (
     <div className="addPost">
       <div className="addPostContainer">
         <div className="addPostTop">
           <img src="/images/1.jpg" alt="" className="addPostPic" />
-          <input placeholder="Whats in your mind..? " type="text" className="addPostInput" id="post" valur={post}  onChange={(e) => setPost(e.target.value)}/>
+          <input placeholder="Whats in your mind..? " type="text" className="addPostInput"
+           id="post"
+           value={post}
+           onChange={(e) => setPost(e.target.value)}/>
         </div>
         <hr className="postHr"/>
         <div className="addPostBottom">
