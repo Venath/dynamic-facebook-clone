@@ -17,9 +17,25 @@ export default function Post({post, removePost}) {
       
     }
   }
+
+  const editPost= async(id)=>{
+try {
+  const res= await axios.put(`/post/edit/${id}`)
+  if(res.data.success){
+    console.log("Edited")
+  }
+} catch (error) {
+  
+}
+  }
   const onDelete =(id)=>{
     console.log("Deleted")
     deletePosts(id);
+  }
+
+  const onEditPost=(id)=>{
+    console.log("object")
+    editPost(id);
   }
 
   const [menuVisible,setMenuVisible]=useState(false);
@@ -41,7 +57,7 @@ setMenuVisible(!menuVisible)
          <MoreVertIcon className="dots" onClick={toggleMenu}/>
          {menuVisible && (
           <div className="dropdownMenu">
-            <div className="dropdownItem"> Edit </div>
+            <div className="dropdownItem" onClick={()=>onEditPost(post._id)}> Edit </div>
             <div className="dropdownItem" onClick={() => onDelete(post._id)}> Delete </div>
           </div>
          )}
@@ -51,7 +67,7 @@ setMenuVisible(!menuVisible)
         </div>
         <div className="postCenter">
             <div className="postCaption">
-               
+               {/* <input type="text" value="" className="title" />  */}
             {linkify(post.title)}
             </div>
             <img src="/images/1.jpg" alt="" className="postedImage" />

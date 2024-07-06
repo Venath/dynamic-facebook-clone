@@ -28,6 +28,27 @@ router.get('/post/get',async(req, res)=>{
     }
 });
 
+router.put('/post/edit/:id', async(req,res)=>{
+try {
+  const postId= req.params.id;
+  const {title}=req.body;
+  const updatePost={
+    title
+  };
+const updatedPost=await Post.findByIdAndUpdate(postId, updatePost);
+if(!updatedPost){
+  return res.status(404).json({error: "Post not found"});
+
+}
+return res.status(200).json({status: "Post updated", post:updatedPost});
+
+} catch (error) {
+  console.error(err)
+  return res.status(500).json({ status: "Error", error: err.message });
+
+}
+})
+
 router.delete('/post/delete/:id', (req,res)=>{
   const postId = req.params.id;
   console.log("Deleted the post with id ", postId);

@@ -113,3 +113,9 @@ justify-content: space-between;
     cursor: pointer;
 }
 
+.title{
+    border: none;
+}
+.title:focus{
+    outline: none;
+}
